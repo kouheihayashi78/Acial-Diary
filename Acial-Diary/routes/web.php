@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PostsController;
+use App\Http\Controllers\LikesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +22,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', [PostsController::class, 'home'])->name('home');
+    Route::get('/detail', [PostsController::class, 'showPostDetail'])->name('post-detail');
+    Route::get('/create', [PostsController::class, 'createPostForm'])->name('create-post');
+    Route::post('/create', [PostsController::class, 'createPost'])->name('create-post');
+    Route::get('/edit', [PostsController::class, 'editPostForm'])->name('edit-post');
+    Route::post('/edit', [PostsController::class, 'editPost'])->name('edit-post');
+    Route::post('/delete', [PostsController::class, 'deletePost'])->name('delete-post');
+});
