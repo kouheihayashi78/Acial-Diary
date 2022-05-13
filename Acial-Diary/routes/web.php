@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\LikesController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,4 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/edit', [PostsController::class, 'editPost'])->name('edit-post');
     Route::post('/delete', [PostsController::class, 'deletePost'])->name('delete-post');
 });
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
