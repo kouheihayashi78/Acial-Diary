@@ -26,6 +26,9 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [PostsController::class, 'home'])->name('home');
+    Route::get('/mypage', [PostsController::class, 'profileEdit'])->name('profile');
+    Route::post('/mypage', [PostsController::class, 'editProfile'])->name('edit-profile');
+    
     Route::get('/detail', [PostsController::class, 'showPostDetail'])->name('post-detail');
     Route::get('/create', [PostsController::class, 'createPostForm'])->name('create-post');
     Route::post('/create', [PostsController::class, 'createPost'])->name('create-post');
@@ -34,3 +37,4 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/delete', [PostsController::class, 'deletePost'])->name('delete-post');
 });
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
