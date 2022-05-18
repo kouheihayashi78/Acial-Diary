@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Mypage\Profile\EditRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Post\Form;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Like;
@@ -55,15 +56,9 @@ class PostsController extends Controller
 
         $data = $request->except('icon');
         $fileName = null;
-        //dd($request->file('icon_url'));
-        //$imagefile = $request->file('icon_url');
-        //storage/app/public/tempファイルに保存
+        //dd($request->file('icon'));
+
         if ($request->has('icon')) {
-            // date_default_timezone_set('Asia/Tokyo');
-            // $originalName = $request->file('icon_url')->getClientOriginalName();
-            // $fileName =  date("Ymd_His") . '.' . $originalName;
-            // $temp_path = $request->file('icon_url')->storeAs('/public/temp', $fileName);
-            // $read_temp_path = $user->id . '/' . str_replace('public/', 'storage/', $temp_path);
 
             $fileName = $this->saveAvatar($request->file('icon'));
             $user->icon = $fileName;
@@ -71,16 +66,12 @@ class PostsController extends Controller
         //dd($fileName);
         $data = array(
             'name' => $request->name,
-
             'icon' => $fileName,
         );
 
         $user->name = $data['name'];
         $user->icon = $data['icon'];
         $user->save();
-
-
-        
 
         return redirect()->back()->with('status', 'プロフィールを変更しました。');
     }
@@ -96,11 +87,11 @@ class PostsController extends Controller
         $tempPath = $this->makeTempPath();
         Image::make($file)->fit(300, 300)->save($tempPath);
         $filePath = Storage::disk('public')->putFile('icons', new File($tempPath));
-        /**
-         * 一時ファイルを生成してパスを取得する(makeTempPathメソッド)
-         * Intervention Imageを使用して、画像をリサイズ後、一時ファイルに保存。
-         * Storageファサードを使用して画像をディスクに保存しています。
-         **/
+        
+        // 一時ファイルを生成してパスを取得する(makeTempPathメソッド)
+        // Intervention Imageを使用して、画像をリサイズ後、一時ファイルに保存。
+        // Storageファサードを使用して画像をディスクに保存しています。
+        
         return basename($filePath);
     }
 
@@ -111,26 +102,71 @@ class PostsController extends Controller
      */
     private function makeTempPath(): string
     {
-        $tmp_fp = tmpfile(); // 以下のコードで一時ファイルを生成します。
-        $meta   = stream_get_meta_data($tmp_fp); //以下のコードでファイルのメタ情報を取得します。
+        $tmp_fp = tmpfile(); // 以下のコードで一時ファイルを生成
+        $meta   = stream_get_meta_data($tmp_fp); //以下のコードでファイルのメタ情報を取得
         return $meta["uri"];
     }
 
     public function showPostDetail($user_id)
     {
     }
+
     public function createPostForm()
     {
+        $form = new Form();
+        $user = Auth::user();
         $ses_key = $this->session_key . '.create';
         $input = session()->get("{$ses_key}.input", []);
-        $user = Auth::user();
 
 
-        return view('create');
+        $view = view('create');
+        $view->with('form', $form->buildCreate($input));
+        return $view;
     }
 
-    public function createPost()
+
+    public function createPostProc(Request $request)
     {
+        $form = new Form();
+        $user = Auth::id();
+
+        $ses_key = "{$this->session_key}.regist";
+        $read_temp_path = null;
+        $data = $request->except('img');
+        if($request->has('img')) {
+            date_default_timezone_set('Asia/Tokyo');
+            $originalName = $request->file('img')->getClientOriginalName();
+            
+            $temp_path = $request->file('img')->storeAs('public/temp', $originalName);
+            $read_temp_path = Url('') . '/' . str_replace('public/', 'storage/', $temp_path);
+        }
+
+        $data = array(
+            'title' => $request->title,
+            'body' => $request->body,
+            'img' => $read_temp_path ?? '',
+            'active' => $request->active,
+            'user_id' => $user,
+            'active' => $request->active,
+        );
+        session()->put("{$ses_key}.input", $data);
+
+        if (empty($data)) {
+            return redirect()->back();
+        }
+
+        $form->postValidates($data);
+        $data = Post::create($data);
+        session()->forget("{$ses_key}");
+        return redirect()->route('create-post-complete');
+    }
+
+    public function createPostComplete()
+    {
+        $view = view('complete');
+        $view->with('mode_name', '新規登録');
+        $view->with('back', route('home'));
+        return $view;
     }
 
     public function editPostForm()

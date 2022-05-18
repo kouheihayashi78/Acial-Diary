@@ -13,7 +13,7 @@ class Post extends Model
         'title',
         'body',
         'img',
-        'active',
+        'user_id',
         'publish',
     ];
 }

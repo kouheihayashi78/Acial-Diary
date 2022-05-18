@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\PostsController;
+use App\Http\Controllers\Post\PostsController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\Auth\LoginController;
 
@@ -28,10 +28,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [PostsController::class, 'home'])->name('home');
     Route::get('/mypage', [PostsController::class, 'profileEdit'])->name('profile');
     Route::post('/mypage', [PostsController::class, 'editProfile'])->name('edit-profile');
-    
     Route::get('/detail', [PostsController::class, 'showPostDetail'])->name('post-detail');
     Route::get('/create', [PostsController::class, 'createPostForm'])->name('create-post');
-    Route::post('/create', [PostsController::class, 'createPost'])->name('create-post');
+    Route::post('/create/proc', [PostsController::class, 'createPostProc'])->name('create-post-proc');
+    Route::get('/create/complete', [PostsController::class, 'createPostComplete'])->name('create-post-complete');
     Route::get('/edit', [PostsController::class, 'editPostForm'])->name('edit-post');
     Route::post('/edit', [PostsController::class, 'editPost'])->name('edit-post');
     Route::post('/delete', [PostsController::class, 'deletePost'])->name('delete-post');
