@@ -8,6 +8,6 @@
     <div>{{$mode_name}}が完了しました<br/></div>
     <br/>
     <br/>
-    <a href="{{$back}}" class="btn btn-primary" style="background-color: #ae1c17;">一覧に戻る</a>
+    <a href="{{$back}}" class="btn btn-primary">一覧に戻る</a>
 </div>
 @endsection

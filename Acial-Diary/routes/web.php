@@ -25,16 +25,18 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', [PostsController::class, 'home'])->name('home');
+    Route::any('/', [PostsController::class, 'home'])->name('home');
     Route::get('/mypage', [PostsController::class, 'profileEdit'])->name('profile');
     Route::post('/mypage', [PostsController::class, 'editProfile'])->name('edit-profile');
-    Route::get('/detail', [PostsController::class, 'showPostDetail'])->name('post-detail');
+    Route::get('/detail{user_id}', [PostsController::class, 'showPostDetail'])->name('post-detail');
     Route::get('/create', [PostsController::class, 'createPostForm'])->name('create-post');
     Route::post('/create/proc', [PostsController::class, 'createPostProc'])->name('create-post-proc');
     Route::get('/create/complete', [PostsController::class, 'createPostComplete'])->name('create-post-complete');
-    Route::get('/edit', [PostsController::class, 'editPostForm'])->name('edit-post');
-    Route::post('/edit', [PostsController::class, 'editPost'])->name('edit-post');
-    Route::post('/delete', [PostsController::class, 'deletePost'])->name('delete-post');
+    Route::any('/edit{user_id}', [PostsController::class, 'editPostForm'])->name('edit-post');
+    Route::post('/edit', [PostsController::class, 'editPost'])->name('edit-post-proc');
+    Route::get('/edit/complete', [PostsController::class, 'editPostComplete'])->name('edit-post-complete');
+    Route::any('/delete{user_id}', [PostsController::class, 'deletePost'])->name('delete-post');
+    Route::get('/delete/complete', [PostsController::class, 'deletePostComplete'])->name('delete-post-complete');
 });
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 

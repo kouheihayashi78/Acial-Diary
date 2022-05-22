@@ -44,15 +44,10 @@ class Form extends Controller
     public function getHtml(array $data = [])
     {
 
-        $data['user_id'] = FormF::hidden('user_id');
+        $data['title'] = "<pre>{$data['title']}<pre>";
+        $data['body'] = "<pre>{$data['title']}<pre>";
+        $data['img'] = "<pre>{$data['img']}<pre>";
 
-        //画像をURL化
-        if ($data['img']) {
-            $file_path = Url('') . '/' . str_replace('public/', 'storage/', $data['img']);
-            $data['img'] = "<pre><a href= '{$file_path}'><img src='{$file_path}' width='100'></a><pre>";
-        } else {
-            $data['img'] = "<pre>選択されていません<pre>";
-        }
 
         return $data;
     }
