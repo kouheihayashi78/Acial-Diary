@@ -334,7 +334,7 @@ main .text {
 }
 
 .top {
-    margin-left: -15rem;
+    margin-left: -10rem;
     margin-bottom: 40px;
 }
 
@@ -669,4 +669,13 @@ SP
 
 .loved {
     color: red;
+}
+
+.js-like {
+    display: flex;
+    align-items: center;
+}
+
+.like-counter {
+    margin-left: 10px;
 }

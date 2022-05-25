@@ -1,4 +1,4 @@
-@extends('layouts.diary')
+@extends('layouts.form')
 
 <!-- @section('css') -->
 

@@ -2,7 +2,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">ホーム</h1>
+        <h1 class="h3 mb-0 text-gray-800">ホーム画面</h1>
         <form role="search" method="GET" class="d-none d-sm-inline-block form-inline ml-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             @csrf
             <div class="input-group">
@@ -19,7 +19,7 @@
     <main>
         <article>
             <div class="top">
-                <p>全ての投稿</p>
+                <p>自分の投稿</p>
             </div>
             @if( count($rows) )
             @foreach( $rows as $row )
@@ -50,7 +50,7 @@
                     <div class="js-like" data-remote="true" data-post-id="{{ $row->id }}" rel="nofollow" data-method="POST">
                         <i class="fas fa-heart"></i>
                         <div class="like-counter">
-                        {{ $row->likes->count() }}
+                            {{ $row->likes->count() }}
                         </div>
                     </div>
 

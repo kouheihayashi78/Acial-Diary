@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.form')
 
 <!-- @section('css') -->
 
@@ -45,40 +45,11 @@
     </div>
 
 
-
-
-    @section('scripts')
-    @parent
-    <script lang="text/javascript">
-        $(function() {
-            if ($('input[name=type]:checked').val() == 2) {
-                $('div[id=url]').show();
-                $('div[id=content]').hide();
-            }
-            $('input[name=type]').change(function() {
-                let val = $(this).val();
-                if (val == 1) {
-                    $('div[id=url]').hide();
-                    $('div[id=content]').show();
-                } else {
-                    $('div[id=url]').show();
-                    $('div[id=content]').hide();
-                }
-            });
-        });
-    </script>
-    @endsection
-    <div class="" style="margin:10px; display: flex;justify-content: center;align-items: center;">
-        <a href="" class="btn btn-svg" style="margin:0px">
-            <svg>
-                <rect x="2" y="2" rx="0" fill="none" width=200 height="50"></rect>
-            </svg>
+    <div class="d-flex justify-content-center align-items-center mt-5">
+        <a href="{{ route('home') }}" class="btn btn-svg">
             <span>一覧に戻る</span>
         </a>
         <button type="submit" class="btn btn-svg">
-            <svg>
-                <rect x="2" y="2" rx="0" fill="none" width=200 height="50"></rect>
-            </svg>
             <span>新規作成</span>
         </button>
     </div>
