@@ -666,3 +666,7 @@ SP
     padding: 150px 15px 0 70px;
     margin: 0 16px 5% 16px;
 }
+
+.loved {
+    color: red;
+}

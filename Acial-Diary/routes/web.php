@@ -17,15 +17,12 @@ use App\Http\Controllers\Auth\LoginController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 Route::group(['middleware' => 'auth'], function () {
     Route::any('/', [PostsController::class, 'home'])->name('home');
+    Route::any('/mypost', [PostsController::class, 'myPost'])->name('my-post');
     Route::get('/mypage', [PostsController::class, 'profileEdit'])->name('profile');
     Route::post('/mypage', [PostsController::class, 'editProfile'])->name('edit-profile');
     Route::get('/detail{user_id}', [PostsController::class, 'showPostDetail'])->name('post-detail');
@@ -37,6 +34,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/edit/complete', [PostsController::class, 'editPostComplete'])->name('edit-post-complete');
     Route::any('/delete{user_id}', [PostsController::class, 'deletePost'])->name('delete-post');
     Route::get('/delete/complete', [PostsController::class, 'deletePostComplete'])->name('delete-post-complete');
+
+    // いいね機能
+    Route::post('post/likes', [LikesController::class, 'like'])->name('create-like');
+    // Route::post('like', [LikesController::class, 'deleteLike'])->name('delete-like');
 });
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-

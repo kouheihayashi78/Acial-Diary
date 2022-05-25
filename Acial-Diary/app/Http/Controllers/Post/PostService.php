@@ -34,7 +34,7 @@ class PostService extends Controller
             
             // キーワードが入力されていない場合
         } else{
-            return $post->orderby('created_at','DESC')->paginate($offset);
+            return $post->orderby('id','DESC')->paginate($offset);
             exit;
         }
         return $keyword;

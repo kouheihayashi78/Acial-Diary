@@ -47,6 +47,7 @@ class PostsController extends Controller
         // $form = $search->build($search_val);
         // $def['active'] = __('define.info.type');
         $rows = $service->getAll($search_val);
+        $posts = Post::withCount('likes')->get();
 
         $view = view('top');
 
@@ -54,6 +55,7 @@ class PostsController extends Controller
 
         $view->with('user', $user);
 
+        $view->with('posts', $posts);
 
         return $view;
     }
@@ -96,23 +98,25 @@ class PostsController extends Controller
         return redirect()->back()->with('status', 'プロフィールを変更しました。');
     }
 
-    /**
-     * 画像をリサイズして保存します
-     *
-     * @param UploadedFile $file アップロードされた画像
-     * @return string ファイル名
-     */
-    public function saveAvatar(UploadedFile $file)
+
+    public function saveAvatar($file)
     {
-        $tempPath = $this->makeTempPath();
-        Image::make($file)->fit(300, 300)->save($tempPath);
-        $filePath = Storage::disk('public')->putFile('icons', new File($tempPath));
+        if($file) {
+            date_default_timezone_set('Asia/Tokyo');
+            $originalName = $file->getClientOriginalName();
+            
+            $temp_path = $file->storeAs('public/icons', $originalName);
+            $read_temp_path = Url('') . '/' . str_replace('public/', 'storage/', $temp_path);
+        }
         
+        // $tempPath = $this->makeTempPath();
+        // Image::make($file)->fit(300, 300)->save($tempPath);
+        // $filePath = Storage::disk('public')->putFile('icons', new File($tempPath));
         // 一時ファイルを生成してパスを取得する(makeTempPathメソッド)
         // Intervention Imageを使用して、画像をリサイズ後、一時ファイルに保存。
         // Storageファサードを使用して画像をディスクに保存しています。
         
-        return basename($filePath);
+        return basename($read_temp_path);
     }
 
     /**

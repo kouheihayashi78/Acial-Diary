@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.79.0">
 
@@ -178,6 +179,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/top.js') }}" defer></script>
+    <script src="{{ asset('js/like.js') }}" defer></script>
 
 
     <!-- <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script> -->

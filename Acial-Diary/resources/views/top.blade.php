@@ -30,13 +30,33 @@
             </ul>
             <ul class="meta" style="display: flex; align-items: center;">
                 <li>
-                    @if (!empty($user->icon))
-                    <img src="/storage/icons/{{$user->icon}}" class="rounded-circle" style="object-fit: cover; width: 50px; height: 50px;">
+                    @if (!empty($row->user->icon))
+                    <img src="/storage/icons/{{$row->user->icon}}" class="rounded-circle" style="object-fit: cover; width: 50px; height: 50px;">
                     @else
                     <img src="/images/blank_profile.png" class="rounded-circle" style="object-fit: cover; width: 50px; height: 50px;">
                     @endif
                 </li>
                 <li><a href="{{ route('post-detail', $row->id) }}">{{ $row->user->name }}さんの投稿</a></li>
+                <li>
+                    @if ($row->likedBy(Auth::user())->count() > 0)
+                    <div class="js-like loved" data-remote="true" data-post-id="{{ $row->id }}" rel="nofollow" data-method="POST">
+                        <i class="fas fa-heart"></i>
+                        <!-- <div class="like-counter">
+                            {{ $row->likes->count() }}
+                        </div> -->
+                    </div>
+
+                    @else
+                    <div class="js-like" data-remote="true" data-post-id="{{ $row->id }}" rel="nofollow" data-method="POST">
+                        <i class="fas fa-heart"></i>
+                        <!-- <div class="like-counter">
+                        {{ $row->likedBy(Auth::user())->count() }}
+                        </div> -->
+                    </div>
+
+                    @endif
+                </li>
+
 
             </ul>
             <div style="display: block; text-align: center;">
@@ -55,7 +75,7 @@
             <div class="readmore"><a href="{{route('post-detail', $row->id)}}">READ MORE</a></div>
             @endforeach
         </article>
-        
+
         @else
         <span>記事がありません</span>
         @endif
