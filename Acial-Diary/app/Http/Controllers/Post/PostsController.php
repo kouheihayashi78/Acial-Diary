@@ -61,14 +61,14 @@ class PostsController extends Controller
     }
 
     /**
-     * ホーム画面
+     * 自分の投稿画面
      * @param Request $request
      * @return void
      */
     public function myPost(Request $request)
     {
         $service = new PostService();
-        $ses_key = $this->session_key . '.home';
+        $ses_key = $this->session_key . '.mypost';
         $user = Auth::user();
 
         if ($request->has('btnSearch')) {
@@ -92,6 +92,40 @@ class PostsController extends Controller
         $view->with('user', $user);
 
         $view->with('posts', $posts);
+
+        return $view;
+    }
+
+    /**
+     * いいね一覧稿画面
+     * @param Request $request
+     * @return void
+     */
+    public function myLike(Request $request)
+    {
+        $service = new PostService();
+        $ses_key = $this->session_key . '.mypost';
+        $user = Auth::user();
+
+        if ($request->has('btnSearch')) {
+            $search_val = $request->all();
+            session()->put($ses_key . '.input', $search_val);
+        }
+        if($request->has('btnSearchClear')){
+            session()->forget("{$ses_key}");
+        }
+
+        $search_val = session()->get("{$ses_key}.input", []);
+        // $form = $search->build($search_val);
+        // $def['active'] = __('define.info.type');
+        $rows = $service->getLikes($user);
+
+        $view = view('like');
+
+        $view->with('rows', $rows);
+
+        $view->with('user', $user);
+
 
         return $view;
     }

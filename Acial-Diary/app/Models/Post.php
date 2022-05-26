@@ -45,6 +45,22 @@ class Post extends Model
         return $hits;
     }
 
+    public function getLike($user)
+    {
+        // keywordがなければ、全て取得
+
+        $like = $this::select('posts.*')
+            ->leftJoin('likes', 'likes.post_id', '=', 'posts.id')
+
+            ->where('posts.user_id', $user->id) // activeカラムは最後に記述しないとうまくいかないのでここに入力
+            ->where('likes.user_id', $user->id) // activeカラムは最後に記述しないとうまくいかないのでここに入力
+            ->where('posts.active', 1) // activeカラムは最後に記述しないとうまくいかないのでここに入力
+            ->orderby('posts.created_at', 'DESC')
+            ->first();
+
+        return $like;
+    }
+
 
     public function likedBy($user)
     {

@@ -23,6 +23,7 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::any('/', [PostsController::class, 'home'])->name('home');
     Route::any('/mypost', [PostsController::class, 'myPost'])->name('my-post');
+    Route::any('/mylike', [PostsController::class, 'myLike'])->name('my-like');
     Route::get('/mypage', [PostsController::class, 'profileEdit'])->name('profile');
     Route::post('/mypage', [PostsController::class, 'editProfile'])->name('edit-profile');
     Route::get('/detail{user_id}', [PostsController::class, 'showPostDetail'])->name('post-detail');

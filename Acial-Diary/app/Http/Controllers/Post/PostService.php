@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
+use App\Models\Like;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\Paginator;
@@ -20,8 +21,8 @@ class PostService extends Controller
 
         $post->where('user_id', '<>', Auth::id());
 
-        if(!empty($data['title'])) $post->where('title', $data['title']);
-        if(!empty($data['body'])) $post->where('body', $data['body']);
+        if (!empty($data['title'])) $post->where('title', $data['title']);
+        if (!empty($data['body'])) $post->where('body', $data['body']);
         if (!empty($data['img'])) $post->where('img', $data['img']);
         if (!empty($data['active'] = 1)) $post->where('active', $data['active']);
         if (!empty($data['publish'] = 1)) $post->where('publish', $data['publish']);
@@ -31,16 +32,16 @@ class PostService extends Controller
         // もしキーワードが入力されている場合
         if (!empty($data['keyword'])) {
             $keyword = $postModel->getSearch($data['keyword']);
-            
+
             // キーワードが入力されていない場合
-        } else{
-            return $post->orderby('id','DESC')->paginate($offset);
+        } else {
+            return $post->orderby('id', 'DESC')->paginate($offset);
             exit;
         }
         return $keyword;
-    } 
+    }
 
-        /**
+    /**
      * 検索処理
      * @param array $data 検索条件を値を配列で取得
      * @return void
@@ -55,7 +56,7 @@ class PostService extends Controller
         $post->where('user_id', $user_id);
 
         if (!empty($data['title'])) $post->where('title', $data['title']);
-        
+
         if (!empty($data['body'])) $post->where('body', $data['body']);
 
         if (!empty($data['active'] = 1)) $post->where('active', $data['active']);
@@ -67,13 +68,50 @@ class PostService extends Controller
         // if( !empty($data['type']) ) $post->where( 'type', $data['type'] );
 
         if (!empty($data['name'])) $user->where('name', $data['name']);
-        
 
 
-        return $post->orderby('id','DESC')->paginate($offset);
+
+        return $post->orderby('id', 'DESC')->paginate($offset);
     }
 
-    public function get(int $id) 
+    /**
+     * 検索処理
+     * @param array $data 検索条件を値を配列で取得
+     * @return void
+     */
+    public function likePostGet()
+    {
+        $postModel = new Post();
+        $like = Like::query();
+        $user = Auth::user();
+
+        $alllike = $postModel->getLike($user);
+
+        return $alllike;
+    }
+
+    public function getLikes($user)
+    {
+
+        $ret = [];
+        $posts = Post::where('active', 1)->get(); //active=1の全てのカテゴリーを取得
+        foreach ($posts as $post) {
+
+            $data = Like::query()
+                ->leftjoin('posts', 'likes.post_id', '=', 'posts.id')
+                ->where('posts.id', $post->id)
+                ->where('likes.user_id', $user->id)
+                ->orderBy('created_at', 'DESC')
+                ->first();
+
+            $ret[$post->id] = $data;
+        }
+
+        return $ret;
+    }
+
+
+    public function get(int $id)
     {
         $data = Post::find($id);
         return $data;

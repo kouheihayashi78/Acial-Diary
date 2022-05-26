@@ -54,7 +54,7 @@
                 </li>
 
                 <li class="nav-item dropdown no-arrow mx-1">
-                    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: red;">
+                    <a class="nav-link" href="{{ route('my-like') }}" style="color: red;">
                         <i class="fa-solid fa-heart"></i>
                     </a>
                 </li>
