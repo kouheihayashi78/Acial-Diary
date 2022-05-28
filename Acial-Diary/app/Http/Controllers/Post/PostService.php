@@ -19,13 +19,14 @@ class PostService extends Controller
         $user = User::query();
         $postModel = new Post();
 
-        $post->where('user_id', '<>', Auth::id());
+        $post->where('user_id', '<>', Auth::id()); // 自分の投稿以外
 
         if (!empty($data['title'])) $post->where('title', $data['title']);
         if (!empty($data['body'])) $post->where('body', $data['body']);
         if (!empty($data['img'])) $post->where('img', $data['img']);
         if (!empty($data['active'] = 1)) $post->where('active', $data['active']);
         if (!empty($data['publish'] = 1)) $post->where('publish', $data['publish']);
+        if (!empty($data['type'] = 1)) $post->where('publish', $data['type']);
 
         if (!empty($data['name'])) $user->where('name', $data['name']);
 
@@ -63,6 +64,8 @@ class PostService extends Controller
 
         if (!empty($data['publish'] = 1)) $post->where('publish', $data['publish']);
 
+        if (!empty($data['type'] = 1)) $post->where('publish', $data['type']);
+
         if (!empty($data['img'])) $post->where('img', $data['img']);
 
         // if( !empty($data['type']) ) $post->where( 'type', $data['type'] );
@@ -70,8 +73,17 @@ class PostService extends Controller
         if (!empty($data['name'])) $user->where('name', $data['name']);
 
 
+        // もしキーワードが入力されている場合
+        if (!empty($data['keyword'])) {
+            $keyword = $postModel->getSearch($data['keyword']);
 
-        return $post->orderby('id', 'DESC')->paginate($offset);
+            // キーワードが入力されていない場合
+        } else {
+            return $post->orderby('id', 'DESC')->paginate($offset);
+            exit;
+        }
+
+        return $keyword;
     }
 
     /**

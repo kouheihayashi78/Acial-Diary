@@ -28,6 +28,7 @@
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+
   <!-- Favicons -->
   <link rel="apple-touch-icon" href="/docs/5.0/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
   <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
@@ -63,30 +64,28 @@
 
 <body>
 
-  <header class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow" style="background-color: #ae1c17;">
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">{{ config('app.name', 'Laravel') }}</a>
+  <header class="navbar navbar-dark sticky-top bg-primary flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">管理画面</a>
     <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <ul class="navbar-nav px-3">
       <li class="nav-item text-nowrap">
-        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-          
-        </a>
+
         <!-- 上のaのクラスdropdown-toggleを消すと三角のアイコンも消えます -->
         <!-- ↓ここはログインユーザーがログアウトするときに使う -->
 
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+        
+          <a class="dropdown-item" href="{{ route('admin.logout') }}" onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
             {{ __('ログアウト') }}<i class="fas fa-sign-out-alt"></i>
           </a>
 
-          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+          <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
             @csrf
           </form>
-        </div>
+        
       </li>
     </ul>
   </header>
@@ -96,32 +95,38 @@
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
         <div class="position-sticky pt-3">
           <ul class="nav flex-column">
-
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" >
+              <a class="nav-link active" aria-current="page" href="">
                 <span data-feather="dashboard"></span>
                 ダッシュボード
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" >
+              <a class="nav-link active" aria-current="page" href="">
                 <span data-feather="admin"></span>
                 管理者管理
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" >
+              <a class="nav-link active" aria-current="page" href="{{route('operate.home')}}">
                 <span data-feather="membars"></span>
                 利用者管理
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" >
+              <a class="nav-link active" aria-current="page" href="">
                 <span data-feather="categories"></span>
                 カテゴリ管理
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="">
+                <span data-feather="categories"></span>
+                記事管理
               </a>
             </li>
           </ul>
@@ -135,11 +140,19 @@
     </div>
   </div>
 
-    <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
-    <script src="dashboard.js"></script>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/master/dist/progressbar.min.js"></script>
+    <!--IE11用-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+    <!--不必要なら削除してください-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script>
+    <!--不必要なら削除してください-->
+
+    <!-- モーダルウィンドウ用 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/js/modaal.min.js"></script>
+    <!--JSを読み込み-->
+    <script src="{{ asset('js/team.js') }}"></script>
+  @yield('scripts')
 </body>
-
-</html>

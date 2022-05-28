@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken()->comment('パスワード再発行トークン');
             $table->timestamps();
             $table->tinyInteger('active')->default(1)->comment('利用可能フラグ');
+            $table->tinyInteger('type')->default(1)->comment('ユーザータイプ');
             $table->string('icon')->nullable()->comment('アイコン');
         });
     }

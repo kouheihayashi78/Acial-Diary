@@ -39,7 +39,7 @@ class PostsController extends Controller
             $search_val = $request->all();
             session()->put($ses_key . '.input', $search_val);
         }
-        if($request->has('btnSearchClear')){
+        if ($request->has('btnSearchClear')) {
             session()->forget("{$ses_key}");
         }
 
@@ -75,7 +75,7 @@ class PostsController extends Controller
             $search_val = $request->all();
             session()->put($ses_key . '.input', $search_val);
         }
-        if($request->has('btnSearchClear')){
+        if ($request->has('btnSearchClear')) {
             session()->forget("{$ses_key}");
         }
 
@@ -111,7 +111,7 @@ class PostsController extends Controller
             $search_val = $request->all();
             session()->put($ses_key . '.input', $search_val);
         }
-        if($request->has('btnSearchClear')){
+        if ($request->has('btnSearchClear')) {
             session()->forget("{$ses_key}");
         }
 
@@ -138,7 +138,7 @@ class PostsController extends Controller
     public function profileEdit()
     {
         $user = Auth::user();
-        
+
         return view('mypage', compact('user', $user));
     }
 
@@ -171,21 +171,21 @@ class PostsController extends Controller
 
     public function saveAvatar($file)
     {
-        if($file) {
+        if ($file) {
             date_default_timezone_set('Asia/Tokyo');
             $originalName = $file->getClientOriginalName();
-            
+
             $temp_path = $file->storeAs('public/icons', $originalName);
             $read_temp_path = Url('') . '/' . str_replace('public/', 'storage/', $temp_path);
         }
-        
+
         // $tempPath = $this->makeTempPath();
         // Image::make($file)->fit(300, 300)->save($tempPath);
         // $filePath = Storage::disk('public')->putFile('icons', new File($tempPath));
         // 一時ファイルを生成してパスを取得する(makeTempPathメソッド)
         // Intervention Imageを使用して、画像をリサイズ後、一時ファイルに保存。
         // Storageファサードを使用して画像をディスクに保存しています。
-        
+
         return basename($read_temp_path);
     }
 
@@ -211,9 +211,9 @@ class PostsController extends Controller
             return redirect()->route('home');
         }
         $rows = $service->myPostGet($data);
-        
+
         $view = view('detail');
-        
+
         //dd($form->getHtml($data->toArray()));
         $view->with('rows', $rows);
         $view->with('user', $user);
@@ -244,10 +244,10 @@ class PostsController extends Controller
         $ses_key = "{$this->session_key}.regist";
         $read_temp_path = null;
         $data = $request->except('img');
-        if($request->has('img')) {
+        if ($request->has('img')) {
             date_default_timezone_set('Asia/Tokyo');
             $originalName = $request->file('img')->getClientOriginalName();
-            
+
             $temp_path = $request->file('img')->storeAs('public/temp', $originalName);
             $read_temp_path = Url('') . '/' . str_replace('public/', 'storage/', $temp_path);
         }
@@ -274,8 +274,10 @@ class PostsController extends Controller
 
     public function createPostComplete()
     {
+        $user = Auth::user();
         $view = view('complete');
         $view->with('mode_name', '新規登録');
+        $view->with('user', $user);
         $view->with('back', route('home'));
         return $view;
     }
@@ -330,7 +332,7 @@ class PostsController extends Controller
         if ($request->has('img')) {
             date_default_timezone_set('Asia/Tokyo');
             $originalName = $request->file('img')->getClientOriginalName();
-            
+
             $temp_path = $request->file('img')->storeAs('public/temp', $originalName);
             $read_temp_path = Url('') . '/' . str_replace('public/', 'storage/', $temp_path);
         }
@@ -352,8 +354,10 @@ class PostsController extends Controller
 
     public function editPostComplete()
     {
+        $user = Auth::user();
         $view = view('complete');
         $view->with('mode_name', '記事編集');
+        $view->with('user', $user);
         $view->with('back', route('home'));
         return $view;
     }
@@ -364,7 +368,7 @@ class PostsController extends Controller
         $ses_key = "{$this->session_key}.delete";
         $data = $service->get($id);
 
-        if(empty($data)) {
+        if (empty($data)) {
             return redirect()->route('post-detail', $id);
         }
 
@@ -375,9 +379,11 @@ class PostsController extends Controller
 
     public function deletePostcomplete(Request $request)
     {
+        $user = Auth::user();
         $view = view('complete');
         $view->with('func_name', 'お知らせ管理');
         $view->with('mode_name', '記事削除');
+        $view->with('user', $user);
         $view->with('back', route('home'));
 
         return $view;

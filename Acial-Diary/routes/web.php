@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Post\PostsController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\AdminLoginController;
+use App\Http\Controllers\Administrator\MembersController;
+use App\Http\Controllers\Administrator;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,4 +43,36 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('post/likes', [LikesController::class, 'like'])->name('create-like');
     // Route::post('like', [LikesController::class, 'deleteLike'])->name('delete-like');
 });
+
+//管理者ページ
+Route::group(['middleware' => 'auth:admin', 'prefix' => 'operate', 'as' => 'operate.'], function () {
+    Route::any('/regist', [MembersController::class, 'regist'])->name('.regist');
+    Route::post('/regist/confirm', [MembersController::class, 'regist_confirm'])->name('regist.confirm');
+    Route::post('/regist/proc', [MembersController::class, 'regist_proc'])->name('regist.proc');
+    Route::any('/regist/complete', [MembersController::class, 'regist_complete'])->name('regist.complete');
+
+    Route::post('/update/confirm', [MembersController::class, 'update_confirm'])->name('update.confirm');
+    Route::post('/update/proc', [MembersController::class, 'update_proc'])->name('update.proc');
+    Route::any('/update/complete', [MembersController::class, 'update_complete'])->name('update.complete');
+    Route::any('/update/{id}', [MembersController::class, 'update'])->name('update');
+
+    Route::post('/delete/proc', [MembersController::class, 'delete_proc'])->name('delete.proc');
+    Route::any('/delete/complete', [MembersController::class, 'delete_complete'])->name('delete.complete');
+    Route::any('/delete/{id}', [MembersController::class, 'delete_confirm'])->name('delete.confirm');
+
+    Route::any('/member/{id}', [MembersController::class, 'detail'])->name('detail');
+
+    Route::any('/member', [MembersController::class, 'index'])->name('home');
+
+    //記事管理
+    Route::any('post', [PostController::class, 'index'])->name('post');
+    Route::post('post/delete/proc', [PostController::class, 'delete_proc'])->name('post.delete.proc');
+    Route::any('post/delete/complete', [PostController::class, 'delete_complete'])->name('post.delete.complete');
+    Route::any('post/delete/{id}', [PostController::class, 'delete_confirm'])->name('post.delete.confirm');
+});
+
+Route::get('login/admin', [AdminLoginController::class, 'showAdminLoginForm'])->name('admin.login');
+Route::post('login/admin', [AdminLoginController::class, 'login']);
+
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
