@@ -24,7 +24,14 @@
 </head>
 
 <body id="page-top">
-
+    <div id="loadingScreen" class="loading">
+        <div class="loading__animation-box">
+            <p>Now loading...</p>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Content Wrapper -->
@@ -140,6 +147,7 @@
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/top.js') }}" defer></script>
     <script src="{{ asset('js/like.js') }}" defer></script>
+    <script src="{{ asset('js/loading.js') }}" defer></script>
 
 </body>
 

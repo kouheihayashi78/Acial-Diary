@@ -679,3 +679,112 @@ SP
 .like-counter {
     margin-left: 10px;
 }
+
+
+/**
+ * ローディングアニメーション
+**/
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1;
+    transition: all 100ms ease-out;
+}
+
+.loading.is-loaded {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.loading__animation-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 240px;
+    height: 130px;
+    position: relative;
+}
+
+.loading__animation-box>p {
+    font-size: 1.4rem;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    margin: auto;
+    color: #fff;
+}
+
+.loading__animation-box>span {
+    display: block;
+    width: 40px;
+    height: 90px;
+    background-color: #fff;
+    animation: beating 2000ms ease-out infinite;
+}
+
+.loading__animation-box>span:nth-child(2) {
+    animation-delay: 0ms;
+}
+
+.loading__animation-box>span:nth-child(3) {
+    animation-delay: 150ms;
+}
+
+.loading__animation-box>span:nth-child(4) {
+    animation-delay: 300ms;
+}
+
+@keyframes beating {
+    0% {
+        transform: scale(0.7);
+    }
+
+    80% {
+        transform: scale(0.6);
+    }
+
+    90% {
+        transform: scale(1.0);
+    }
+
+    100% {
+        transform: scale(0.7);
+    }
+}
+
+/* 画像ローディング */
+.img-box {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+
+@keyframes rotation {}
+
+.img-box::after {
+    content: "読み込み中...";
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    z-index: -1;
+    font-size: 1rem;
+    color: #999;
+}
+
+.img-box>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
