@@ -19,7 +19,7 @@ class PostService extends Controller
         $user = User::query();
         $postModel = new Post();
 
-        $post->where('user_id', '<>', Auth::id()); // 自分の投稿以外
+        // $post->where('user_id', '<>', Auth::id()); // 自分の投稿以外
 
         if (!empty($data['title'])) $post->where('title', $data['title']);
         if (!empty($data['body'])) $post->where('body', $data['body']);
