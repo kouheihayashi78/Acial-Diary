@@ -3,14 +3,7 @@
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">ホーム画面</h1>
-        <form role="search" method="GET" class="d-none d-sm-inline-block form-inline ml-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            @csrf
-            <div class="input-group">
-                <input type="text" class="form-control border-0 small" name="keyword" placeholder="キーワード検索" aria-label="Search" aria-describedby="basic-addon2">
-                <input type="submit" id="searchsubmit" name="btnSearchClear" value="✖️" style="font-size: 23px; top: -3px; right: 15rem; background: white; border: none;">
-                <input type="submit" id="searchsubmit" name="btnSearch" value="検索" style="border-top-right-radius: 15px; border-bottom-right-radius: 15px; border: 1px solid;">
-            </div>
-        </form>
+
     </div>
 
 </div>

@@ -40,7 +40,7 @@
             <div id="content">
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                     <div class="d-sm-flex align-items-center justify-content-between mr-4">
-                        <a class="navbar-brand" href="{{ url('/') }}">
+                        <a class="navbar-brand ml-5" href="{{ url('/') }}">
                             {{ config('app.name', 'Laravel') }}
                         </a>
                     </div>

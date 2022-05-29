@@ -39,6 +39,7 @@ class Post extends Model
             ->orwhere('posts.title', 'LIKE', "%{$data}%")
             ->orwhere('posts.body', 'LIKE', "%{$data}%")
             ->where('posts.active', 1) 
+            ->where('posts.publish', 1) 
             ->orderby('posts.created_at', 'DESC')
             ->get();
 

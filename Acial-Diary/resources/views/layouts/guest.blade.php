@@ -26,7 +26,7 @@
 <body>
     <!--ページトップ(黒帯)-->
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-5" width:1400px;>
-        <a class="navbar-brand" href="/">{{ config('app.name', 'Laravel') }}</a>
+        <a class="navbar-brand ms-5" href="{{ route('operate.home') }}">{{ config('app.name', 'Laravel') }}</a>
         <div class="collapse navbar-collapse"></div>
     </nav>
 
