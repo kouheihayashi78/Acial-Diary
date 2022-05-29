@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Administrator;
 
 use App\Http\TakemiLibs\InterfaceSearch;
-use App\Http\TakemiLibs\SimpleForm;
+use App\Http\Controllers\SimpleForm;
 use \Form;
 
 /**
- * お知らせ管理画面の検索条件入力フォーム
+ * 管理画面の検索条件入力フォーム
  */
 class Search
 {
@@ -22,15 +22,9 @@ class Search
 
         $form['email'] = Form::text('email', $data['email'] ?? '', $opt);
 
-        
+        $form['active'] = SimpleForm::radio('active', $data['active'] ?? '', __('define.active'), []);
 
 
         return $form;
-    }
-
-    public function getRule(array $data = []): array
-    {
-        $ret = [];
-        return $ret;
     }
 }

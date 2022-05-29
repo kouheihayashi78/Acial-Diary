@@ -46,7 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 //管理者ページ
 Route::group(['middleware' => 'auth:admin', 'prefix' => 'operate', 'as' => 'operate.'], function () {
-    Route::any('/regist', [MembersController::class, 'regist'])->name('.regist');
+    Route::any('/regist', [MembersController::class, 'regist'])->name('regist');
     Route::post('/regist/confirm', [MembersController::class, 'regist_confirm'])->name('regist.confirm');
     Route::post('/regist/proc', [MembersController::class, 'regist_proc'])->name('regist.proc');
     Route::any('/regist/complete', [MembersController::class, 'regist_complete'])->name('regist.complete');
@@ -72,7 +72,10 @@ Route::group(['middleware' => 'auth:admin', 'prefix' => 'operate', 'as' => 'oper
 });
 
 Route::get('login/admin', [AdminLoginController::class, 'showAdminLoginForm'])->name('admin.login');
-Route::post('login/admin', [AdminLoginController::class, 'login']);
+Route::post('login/admin', [AdminLoginController::class, 'login'])->name('admin.login');
 
-Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
+Route::post('admin/logout', [AdminLoginController::class, 'adminLogout'])->name('admin.logout');
+
+///////////////////////////////////////////////////
+// 一緒のページ名でメソッドも一緒だと読み込まないので区別する
+///////////////////////////////////////////////////

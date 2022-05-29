@@ -50,10 +50,10 @@ class MembersService
         //dd($data);
 
         //画像を移動
-        if ($data['icon_url']) {
+        if ($data['icon']) {
 
-            $file_path = str_replace('temp/members', 'members/' . $data['name'], $data['icon_url']);
-            Storage::move($data['icon_url'], $file_path);
+            $file_path = str_replace('temp/members', 'members/' . $data['name'], $data['icon']);
+            Storage::move($data['icon'], $file_path);
         }
         //dd($file_path);
 
@@ -61,8 +61,8 @@ class MembersService
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'icon_url' => $file_path ?? '',
-            'active' => '1'
+            'icon' => $file_path ?? '',
+            'active' => 1
         ]);
 
         return $data;
@@ -76,18 +76,13 @@ class MembersService
      */
     public function update($id, $data = [])
     {
-
-        if ($data['type'] == 2) {
-            $data['content'] = $data['url'];
-        }
-
         $recode = User::find($id);
         if (!$recode) return null;
-
-        $recode->fill($data);
+        
+        $recode->fill(['password' => Hash::make($data['password'])]);
+        // アップデートの時はfillが便利！！！！fillを使うと一発
+        // 普通はプロパティ毎に入れる値を書いてあげる必要があるから。
         $recode->save();
-
-        //画像の更新処理（あれば）
 
         return $recode;
     }
@@ -106,7 +101,5 @@ class MembersService
             $delete_date->active = 2;
             $delete_date->save();
         }
-
-        //dd($delete_date->active);
     }
 }

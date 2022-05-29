@@ -4,7 +4,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">メンバー管理</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="" class="btn btn-sm btn-outline-primary">新規作成</a>
+        <a href="{{ route('operate.regist') }}" class="btn btn-sm btn-outline-primary">新規作成</a>
     </div>
 </div>
 <!--ログイン成功メッセージ-->
@@ -35,7 +35,9 @@
             </div>
             <div class="form-group row">
                 <label for="active" class="col-sm-2 col-form-label">利用可能フラグ</label>
-
+                <div class="col-sm-10">
+                    @foreach ($form['active'] as $node) {!! $node !!} @endforeach
+                </div>
             </div>
 
         </div>

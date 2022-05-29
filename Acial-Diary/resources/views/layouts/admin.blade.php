@@ -77,12 +77,12 @@
         <!-- ↓ここはログインユーザーがログアウトするときに使う -->
 
         
-          <a class="dropdown-item" href="{{ route('admin.logout') }}" onclick="event.preventDefault();
+          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
             {{ __('ログアウト') }}<i class="fas fa-sign-out-alt"></i>
           </a>
 
-          <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
             @csrf
           </form>
         
@@ -95,19 +95,6 @@
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
         <div class="position-sticky pt-3">
           <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="">
-                <span data-feather="dashboard"></span>
-                ダッシュボード
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="">
-                <span data-feather="admin"></span>
-                管理者管理
-              </a>
-            </li>
 
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{{route('operate.home')}}">
@@ -118,14 +105,7 @@
 
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="">
-                <span data-feather="categories"></span>
-                カテゴリ管理
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="">
-                <span data-feather="categories"></span>
+                <span data-feather="admins"></span>
                 記事管理
               </a>
             </li>

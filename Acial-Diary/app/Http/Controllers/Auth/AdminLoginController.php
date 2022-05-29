@@ -55,48 +55,15 @@ class AdminLoginController extends Controller
     {
         return Auth::guard('admin');
     }
-
-    public function logout(Request $request)
-    {
-        Auth::guard('admin')->logout();  //変更
-        $request->session()->flush();
-        $request->session()->regenerate();
- 
-        return redirect('/login/admin');  //変更
-    }
     
 
-    public function adminLogin(Request $request)
+    protected function credentials(Request $request)
     {
-        $this->validate($request, [
-            'email'   => 'required|email',
-            'password' => 'required|min:8'
-        ]);
-
-        // If the class is using the ThrottlesLogins trait, we can automatically throttle
-        // the login attempts for this application. We'll key this by the username and
-        // the IP address of the client making these requests into this application.
-        /*
-        if (
-            method_exists($this, 'hasTooManyLoginAttempts') &&
-            $this->hasTooManyLoginAttempts($request)
-        ) {
-            $this->fireLockoutEvent($request);
-
-            return $this->sendLockoutResponse($request);
-        }
-        */
-
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'type' => 2, 'active' => 1])) {
-            return redirect('/operate/member');
-        }
-
-        // If the login attempt was unsuccessful we will increment the number of attempts
-        // to login and redirect the user back to the login form. Of course, when this
-        // user surpasses their maximum number of attempts they will get locked out.
-        //$this->incrementLoginAttempts($request);
-
-        return back()->withInput($request->only('email', 'remember'));
+        return array_merge(
+            $request->only($this->username(), 'password'), // 標準の条件
+            ['type' => 2], // 追加条件
+            ['active' => 1] // 追加条件
+        );
     }
 
 

@@ -30,17 +30,17 @@
 </div>
 
 <div class="form-group row">
-    <label for="icon_url" class="col-sm-2 col-form-label">プロフィール画像</label>
+    <label for="icon" class="col-sm-2 col-form-label">プロフィール画像</label>
     <div class="col-sm-10">
-        {!! $form['icon_url'] !!}
-        @error('icon_url')
+        {!! $form['icon'] !!}
+        @error('icon')
         <span id="name-error" class="error invalid-feedback" style="display:block">{{$message}}</span>
         @enderror
     </div>
 </div>
 
 {{-- <div class="form-group row">
-        {!! $icon['icon_url'] !!}
+        {!! $icon['icon'] !!}
 </div> --}}
 
 
