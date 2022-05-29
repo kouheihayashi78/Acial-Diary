@@ -24,6 +24,9 @@ class MembersService
 
         if (!empty($data['active'])) $db->where('active', 'LIKE', "%{$data['active']}%");
 
+        if (!empty($data['type'] = 1)) $db->where('type', $data['type']);
+        // 管理者は表示しないようにする
+
         return $db->paginate(10);
     }
 

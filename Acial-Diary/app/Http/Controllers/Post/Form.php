@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use \Form as FormF;
+use App\Http\Controllers\SimpleForm;
 use Illuminate\Support\Facades\Validator;
 
 class Form extends Controller
@@ -23,7 +24,7 @@ class Form extends Controller
         $form['body'] = FormF::textarea('body', $data['body'] ?? '', $opt);
         $form['img'] = FormF::file('img', $opt, $data['img'] ?? '');
         $form['user_id'] = FormF::hidden('user_id', $user ?? '', $opt);
-        $form['publish'] = FormF::text('publish', $data['publish'] ?? '', $opt);
+        $form['publish'] = SimpleForm::radio('publish', $data['publish'] ?? '', __('define.publish'), ['checked']);
         return $form;
     }
 

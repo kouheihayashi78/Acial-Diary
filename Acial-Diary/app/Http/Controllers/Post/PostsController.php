@@ -104,7 +104,7 @@ class PostsController extends Controller
     public function myLike(Request $request)
     {
         $service = new PostService();
-        $ses_key = $this->session_key . '.mypost';
+        $ses_key = $this->session_key . '.mylike';
         $user = Auth::user();
 
         if ($request->has('btnSearch')) {
@@ -118,7 +118,7 @@ class PostsController extends Controller
         $search_val = session()->get("{$ses_key}.input", []);
         // $form = $search->build($search_val);
         // $def['active'] = __('define.info.type');
-        $rows = $service->getLikes($user);
+        $rows = $service->likePostGet();
 
         $view = view('like');
 
@@ -258,7 +258,7 @@ class PostsController extends Controller
             'img' => $read_temp_path ?? '',
             'active' => $request->active,
             'user_id' => $user,
-            'active' => $request->active,
+            'publish' => $request->publish,
         );
         session()->put("{$ses_key}.input", $data);
 
@@ -304,6 +304,7 @@ class PostsController extends Controller
         }
         $view = view('update');
         $view->with('form', $form->buildCreate($input));
+        $view->with('rows', $rows);
         $view->with('user', $user);
 
         return $view;

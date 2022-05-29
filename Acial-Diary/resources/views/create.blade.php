@@ -34,6 +34,13 @@
         <span class="focus_line"></span>
     </div>
 
+    <div id="contents" class="cp_iptxt">
+        <label for="publish" class="d-flex">公開</label>
+        @foreach ($form['publish'] as $publish) {!! $publish !!} @endforeach
+
+        <span class="focus_line"></span>
+    </div>
+
 
     <div id="contents" class="cp_iptxt">
         <label for="img" class="d-flex">画像</label>
@@ -41,7 +48,7 @@
         @error('img')
         <span id="name-error" class="error invalid-feedback" style="display:block">{{$message}}</span>
         @enderror
-
+        <span class="focus_line"></span>
     </div>
 
 

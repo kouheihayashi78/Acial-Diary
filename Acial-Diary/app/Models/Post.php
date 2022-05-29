@@ -38,7 +38,7 @@ class Post extends Model
             ->where('users.name', 'LIKE', "%{$data}%")
             ->orwhere('posts.title', 'LIKE', "%{$data}%")
             ->orwhere('posts.body', 'LIKE', "%{$data}%")
-            ->where('posts.active', 1) // activeカラムは最後に記述しないとうまくいかないのでここに入力
+            ->where('posts.active', 1) 
             ->orderby('posts.created_at', 'DESC')
             ->get();
 
@@ -52,11 +52,10 @@ class Post extends Model
         $like = $this::select('posts.*')
             ->leftJoin('likes', 'likes.post_id', '=', 'posts.id')
 
-            ->where('posts.user_id', $user->id) // activeカラムは最後に記述しないとうまくいかないのでここに入力
-            ->where('likes.user_id', $user->id) // activeカラムは最後に記述しないとうまくいかないのでここに入力
+            ->where('likes.user_id', $user->id) 
             ->where('posts.active', 1) // activeカラムは最後に記述しないとうまくいかないのでここに入力
             ->orderby('posts.created_at', 'DESC')
-            ->first();
+            ->get();
 
         return $like;
     }

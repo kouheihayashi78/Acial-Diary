@@ -26,7 +26,6 @@ class PostService extends Controller
         if (!empty($data['img'])) $post->where('img', $data['img']);
         if (!empty($data['active'] = 1)) $post->where('active', $data['active']);
         if (!empty($data['publish'] = 1)) $post->where('publish', $data['publish']);
-        if (!empty($data['type'] = 1)) $post->where('publish', $data['type']);
 
         if (!empty($data['name'])) $user->where('name', $data['name']);
 
@@ -62,9 +61,7 @@ class PostService extends Controller
 
         if (!empty($data['active'] = 1)) $post->where('active', $data['active']);
 
-        if (!empty($data['publish'] = 1)) $post->where('publish', $data['publish']);
-
-        if (!empty($data['type'] = 1)) $post->where('publish', $data['type']);
+        if (!empty($data['publish'])) $post->where('publish', $data['publish']);
 
         if (!empty($data['img'])) $post->where('img', $data['img']);
 
@@ -94,34 +91,12 @@ class PostService extends Controller
     public function likePostGet()
     {
         $postModel = new Post();
-        $like = Like::query();
         $user = Auth::user();
 
         $alllike = $postModel->getLike($user);
 
         return $alllike;
     }
-
-    public function getLikes($user)
-    {
-
-        $ret = [];
-        $posts = Post::where('active', 1)->get(); //active=1の全てのカテゴリーを取得
-        foreach ($posts as $post) {
-
-            $data = Like::query()
-                ->leftjoin('posts', 'likes.post_id', '=', 'posts.id')
-                ->where('posts.id', $post->id)
-                ->where('likes.user_id', $user->id)
-                ->orderBy('created_at', 'DESC')
-                ->first();
-
-            $ret[$post->id] = $data;
-        }
-
-        return $ret;
-    }
-
 
     public function get(int $id)
     {
