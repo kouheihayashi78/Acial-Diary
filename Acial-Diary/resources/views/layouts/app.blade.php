@@ -20,6 +20,11 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/newpost.css') }}" rel="stylesheet">
+    <style>
+        body {
+            background-image: linear-gradient(to right, #4e8dff, #3e68ff, #2b8aff, #1d8dff, #23ddf9);
+        }
+    </style>
 </head>
 
 <body>

@@ -7,7 +7,7 @@
 <div class="row">
     <form action="{{route('operate.update.proc')}}" class="form-horizontal form-label-left" method="post">
         @csrf
-        @include('operate.form')
+        @include('operate.user.form')
         <div class="form-group form-inline" style="margin-top:10px;">
             <a href="{{route('operate.update', $data->id)}}" class="btn btn-secondary">入力に戻る</a>
             <button class="btn btn-primary">登録する</button>

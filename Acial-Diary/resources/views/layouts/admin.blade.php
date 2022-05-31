@@ -76,16 +76,16 @@
         <!-- 上のaのクラスdropdown-toggleを消すと三角のアイコンも消えます -->
         <!-- ↓ここはログインユーザーがログアウトするときに使う -->
 
-        
-          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">
-            {{ __('ログアウト') }}<i class="fas fa-sign-out-alt"></i>
-          </a>
 
-          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-            @csrf
-          </form>
-        
+        <a class="dropdown-item" href="{{ route('logout') }}" style="color: white;" onclick="event.preventDefault();
+          document.getElementById('logout-form').submit();">
+          {{ __('ログアウト') }}<i class="fas fa-sign-out-alt"></i>
+        </a>
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+          @csrf
+        </form>
+
       </li>
     </ul>
   </header>
@@ -104,7 +104,7 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="">
+              <a class="nav-link active" aria-current="page" href="{{route('operate.post')}}">
                 <span data-feather="admins"></span>
                 記事管理
               </a>
@@ -121,18 +121,18 @@
   </div>
 
 
-<!-- JavaScript Bundle with Popper -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/master/dist/progressbar.min.js"></script>
-    <!--IE11用-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
-    <!--不必要なら削除してください-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script>
-    <!--不必要なら削除してください-->
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://rawgit.com/kimmobrunfeldt/progressbar.js/master/dist/progressbar.min.js"></script>
+  <!--IE11用-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+  <!--不必要なら削除してください-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script>
+  <!--不必要なら削除してください-->
 
-    <!-- モーダルウィンドウ用 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/js/modaal.min.js"></script>
-    <!--JSを読み込み-->
-    <script src="{{ asset('js/team.js') }}"></script>
+  <!-- モーダルウィンドウ用 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/js/modaal.min.js"></script>
+  <!--JSを読み込み-->
+  <script src="{{ asset('js/team.js') }}"></script>
   @yield('scripts')
 </body>

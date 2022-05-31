@@ -7,7 +7,7 @@
 <div class="row">
     <form action="{{route('operate.regist.proc')}}" class="form-horizontal form-label-left" method="post" enctype="multipart/form-data">
         @csrf
-        @include('operate.form')
+        @include('operate.user.form')
         <div class="form-group form-inline" style="margin-top:10px;">
             <a href="{{route('operate.regist')}}" class="btn btn-secondary m-2">入力に戻る</a>
             <button class="btn btn-primary">登録する</button>

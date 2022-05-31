@@ -10,7 +10,7 @@
 
 <div class="row">
     <form action="{{route('operate.regist.confirm')}}" class="form-horizontal form-label-left" method="post">
-        @include('operate.form')
+        @include('operate.user.form')
         <div class="form-group form-inline" style="margin-top:10px;">
             <a href="{{route('operate.home')}}" class="btn btn-secondary">一覧に戻る</a>
         </div>

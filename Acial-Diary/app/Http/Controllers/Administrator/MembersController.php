@@ -53,7 +53,7 @@ class MembersController extends Controller
         //検索結果をDBから取得
         $rows = $service->getList($search_val);
 
-        $view = view('operate.list');
+        $view = view('operate.user.list');
 
         $view->with('rows', $rows); //検索結果
         $view->with('form', $form); //フォーム
@@ -79,7 +79,7 @@ class MembersController extends Controller
             return redirect()->route('operate.home');
         }
 
-        $view = view('operate.detail');
+        $view = view('operate.user.detail');
         $view->with('form', $form->getHtml($data->toArray()));
         //dd($form->getHtml($data->toArray()));
 
@@ -99,7 +99,7 @@ class MembersController extends Controller
 
         $input = session()->get("{$ses_key}.input", []);
 
-        $view = view('operate.regist');
+        $view = view('operate.user.regist');
         $view->with('form', $form->buildRegist($input));
 
         return $view;
@@ -136,7 +136,7 @@ class MembersController extends Controller
         session()->put("{$ses_key}.input", $data);
 
         //確認画面表示
-        $view = view('operate.regist_confirm');
+        $view = view('operate.user.regist_confirm');
         $view->with('form', $form->getHtml($data));
 
         return $view;
@@ -218,7 +218,7 @@ class MembersController extends Controller
             $input = $data->toArray();
         }
         //dd($input);
-        $view = view('operate.update');
+        $view = view('operate.user.update');
         $view->with('form', $form->build($input));
         //アイコン写真
         $view->with('icon', $form->getHtml($data->toArray()));
@@ -269,7 +269,7 @@ class MembersController extends Controller
         $data = $service->get(session()->get("{$ses_key}.id"));
 
         //確認画面表示
-        $view = view('operate.update_confirm');
+        $view = view('operate.user.update_confirm');
         $view->with('form', $form->getHtml($input));
         $view->with('data', $data);
 
@@ -320,7 +320,7 @@ class MembersController extends Controller
      */
     public function update_complete(Request $request)
     {
-        $view = view('operate.admin_complete');
+        $view = view('operate.user.admin_complete');
 
         $view->with('func_name', 'メンバー管理');
         $view->with('mode_name', '更新');
@@ -350,7 +350,7 @@ class MembersController extends Controller
         session()->put("{$ses_key}.id", $id); //(users.delete.id)
 
         //dd($data);
-        $view = view('operate.delete_confirm');
+        $view = view('operate.user.delete_confirm');
         $view->with('form', $form->getHtml($data->toArray()));
         // var_dump($data->toArray());
         // var_dump($form->getHtml($data->toArray()));
@@ -394,7 +394,7 @@ class MembersController extends Controller
      */
     public function delete_complete(Request $request)
     {
-        $view = view('operate.admin_complete');
+        $view = view('operate.user.admin_complete');
 
         $view->with('func_name', 'メンバー管理');
         $view->with('mode_name', '削除');

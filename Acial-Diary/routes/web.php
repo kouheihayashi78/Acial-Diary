@@ -7,7 +7,7 @@ use App\Http\Controllers\LikesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Administrator\MembersController;
-use App\Http\Controllers\Administrator;
+use App\Http\Controllers\Administrator\AdminPostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,10 +65,10 @@ Route::group(['middleware' => 'auth:admin', 'prefix' => 'operate', 'as' => 'oper
     Route::any('/member', [MembersController::class, 'index'])->name('home');
 
     //記事管理
-    Route::any('post', [PostController::class, 'index'])->name('post');
-    Route::post('post/delete/proc', [PostController::class, 'delete_proc'])->name('post.delete.proc');
-    Route::any('post/delete/complete', [PostController::class, 'delete_complete'])->name('post.delete.complete');
-    Route::any('post/delete/{id}', [PostController::class, 'delete_confirm'])->name('post.delete.confirm');
+    Route::any('/post', [AdminPostController::class, 'index'])->name('post');
+    Route::post('/post/delete/proc', [AdminPostController::class, 'delete_proc'])->name('post.delete.proc');
+    Route::any('/post/delete/complete', [AdminPostController::class, 'delete_complete'])->name('post.delete.complete');
+    Route::any('/post/delete/{id}', [AdminPostController::class, 'delete_confirm'])->name('post.delete.confirm');
 });
 
 Route::get('login/admin', [AdminLoginController::class, 'showAdminLoginForm'])->name('admin.login');
