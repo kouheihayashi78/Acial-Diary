@@ -53,6 +53,7 @@
         @else
         <span>記事がありません</span>
         @endif
+        {{ $rows->links() }}
     </main>
 
 

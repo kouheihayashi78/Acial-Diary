@@ -13,7 +13,7 @@ use Illuminate\Pagination\Paginator;
 
 class PostService extends Controller
 {
-    public function getAll($data = [], $offset = 10)
+    public function getAll($data = [], $offset = 5)
     {
         $post = Post::query();
         $user = User::query();
@@ -38,7 +38,7 @@ class PostService extends Controller
             return $post->orderby('id', 'DESC')->paginate($offset);
             exit;
         }
-        return $keyword;
+        return $keyword->sortByDesc('created_at')->paginate($offset);
     }
 
     /**
@@ -46,7 +46,7 @@ class PostService extends Controller
      * @param array $data 検索条件を値を配列で取得
      * @return void
      */
-    public function myPostGet($data = [], $offset = 10)
+    public function myPostGet($data = [], $offset = 5)
     {
         $post = Post::query();
         $user = User::query();
@@ -80,7 +80,7 @@ class PostService extends Controller
             exit;
         }
 
-        return $keyword;
+        return $keyword->sortByDesc('created_at')->paginate($offset);
     }
 
     /**
@@ -88,14 +88,14 @@ class PostService extends Controller
      * @param array $data 検索条件を値を配列で取得
      * @return void
      */
-    public function likePostGet()
+    public function likePostGet($offset = 5)
     {
         $postModel = new Post();
         $user = Auth::user();
 
         $alllike = $postModel->getLike($user);
 
-        return $alllike;
+        return $alllike->paginate($offset);;
     }
 
     public function get(int $id)
