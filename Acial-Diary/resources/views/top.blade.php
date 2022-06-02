@@ -2,7 +2,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">ホーム</h1>
+        <h1 class="h3 mb-0 text-gray-800"></h1>
         <form role="search" method="GET" class="d-none d-sm-inline-block form-inline ml-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             @csrf
             <div class="input-group">

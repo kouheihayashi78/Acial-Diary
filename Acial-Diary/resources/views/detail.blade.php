@@ -40,7 +40,7 @@
 
 
     <div class="form-group form-inline w-75 my-5 mx-auto">
-        <a href="{{ route('my-post') }}" class="btn btn-secondary">一覧に戻る</a>
+        <a href="{{ route('home') }}" class="btn btn-secondary">一覧に戻る</a>
         @if( Auth::check() )
 
         @foreach( $rows as $row )
